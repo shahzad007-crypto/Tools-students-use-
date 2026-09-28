@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Survey Questionnaire Construction Studio | UTAS Ibra</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts: Inter & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              navy: '#0b192e',
+              deep: '#0f2444',
+              gold: '#f59e0b',
+              goldLight: '#fbbf24',
+              amber: '#d97706',
+              surface: '#172a46',
+              accent: '#38bdf8'
+            }
+          },
+          fontFamily: {
+            heading: ['Outfit', 'sans-serif'],
+            body: ['"Plus Jakarta Sans"', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(circle at 50% 0%, #172a46 0%, #0b192e 100%);
+      min-height: 100vh;
+      color: #e2e8f0;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, .font-heading {
+      font-family: 'Outfit', sans-serif;
+    }
+
+    /* Landscape Studio Layout Enhancements */
+    .landscape-container {
+      max-width: 1560px;
+      width: 100%;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Fixed ergonomic viewports for landscape mode */
+    @media (min-width: 1024px) {
+      .landscape-panel-scroll {
+        max-height: calc(100vh - 170px);
+        overflow-y: auto;
+      }
+    }
+
+    /* Elegant Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0b192e;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #f59e0b;
+    }
+
+    /* Word Tile Aesthetics */
+    .word-tile {
+      transition: all 0.18s cubic-bezier(0.4, 0, 0.2, 1);
+      user-select: none;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+    }
+    .word-tile:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 15px -3px rgba(245, 158, 11, 0.3);
+    }
+    .word-tile:active {
+      transform: scale(0.96);
+    }
+
+    /* Pulse Glow */
+    .gold-glow {
+      box-shadow: 0 0 25px rgba(245, 158, 11, 0.35);
+    }
+    .success-glow {
+      box-shadow: 0 0 30px rgba(34, 197, 94, 0.4);
+    }
+
+    /* Print Formatting */
+    @media print {
+      body {
+        background: #ffffff !important;
+        color: #000000 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .print-only {
+        display: block !important;
+      }
+      .survey-export-container {
+        border: none !important;
+        background: white !important;
+        color: black !important;
+        box-shadow: none !important;
+      }
+    }
+  </style>
+</head>
+
+<body class="flex flex-col min-h-screen text-slate-100">
+
+  <!-- STICKY TOP BRANDING & NAVIGATION BAR -->
+  <header class="no-print sticky top-0 z-50 bg-[#0b192e]/95 backdrop-blur-md border-b border-amber-500/30 px-4 py-2.5 shadow-lg">
+    <div class="landscape-container flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <span class="inline-flex items-center justify-center w-9 h-9 rounded-xl bg-gradient-to-br from-amber-400 to-amber-600 text-slate-950 font-black text-lg shadow-md">
+          U
+        </span>
+        <div>
+          <div class="text-[10px] uppercase tracking-widest text-amber-400 font-semibold leading-tight">UTAS Ibra • GFP PSC</div>
+          <div class="text-xs md:text-sm font-bold tracking-tight text-white flex items-center gap-2">
+            <span>GE-3 Group 13 | P&P Studio</span>
+            <span class="hidden md:inline-block px-2 py-0.5 text-[10px] bg-sky-950 border border-sky-500/30 text-sky-300 rounded-full font-medium">Topic: Tools Students Use to Plan Their Study and Daily Tasks</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Resource Person Sticky Attribution -->
+      <div class="flex items-center bg-gradient-to-r from-amber-500/10 via-amber-500/20 to-amber-500/10 border border-amber-500/40 px-3 py-1 rounded-lg shadow-sm">
+        <i class="fa-solid fa-crown text-amber-400 mr-2 text-xs"></i>
+        <span class="text-xs font-semibold text-slate-200">
+          Resource Person: <strong class="text-amber-300 font-bold tracking-wide">Muhammad Shahzad</strong>
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow landscape-container px-3 md:px-6 py-4 flex flex-col justify-start">
+
+    <!-- QUESTION PROGRESS BAR & STEP TRACKER (Horizontal Ribbon) -->
+    <div id="progressTrackerContainer" class="hidden mb-4 no-print">
+      <div class="bg-slate-900/80 border border-slate-700/80 rounded-2xl p-3 shadow-xl">
+        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+              <i class="fa-solid fa-list-check"></i> Questionnaire Milestones
+            </span>
+            <span id="progressSummaryText" class="text-xs text-slate-400">(0 of 10 Approved)</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span id="activeGroupNameBadge" class="text-xs px-2.5 py-0.5 bg-amber-500/20 border border-amber-500/40 text-amber-300 rounded-md font-semibold">
+              Group 13 Collaboration
+            </span>
+          </div>
+        </div>
+
+        <!-- 10 Steps Dots Tracker -->
+        <div class="grid grid-cols-5 md:grid-cols-10 gap-2" id="progressPillsGrid">
+          <!-- Dynamically populated 1 to 10 pills -->
+        </div>
+      </div>
+    </div>
+
+    <!-- SCREEN 1: WELCOME & GROUP ROLES SCREEN -->
+    <section id="welcomeScreen" class="w-full flex flex-col items-center">
+      
+      <!-- HERO TITLE & PROMINENT RESOURCE PERSON EXECUTIVE BANNER -->
+      <div class="w-full text-center mb-6">
+        <div class="inline-block mb-2 px-4 py-1 rounded-full bg-slate-800 border border-slate-700 text-sky-400 text-xs font-semibold tracking-wider uppercase">
+          General Foundation Programme (GFP) • Academic Year 2026–2027
+        </div>
+        <h1 class="text-2xl md:text-4xl font-black text-white tracking-tight mb-2">
+          Academic Survey Questionnaire <br class="hidden md:block"/>
+          <span class="bg-clip-text text-transparent bg-gradient-to-r from-amber-300 via-amber-400 to-amber-500">
+            Construction Studio
+          </span>
+        </h1>
+        <p class="text-slate-300 text-sm md:text-base max-w-2xl mx-auto">
+          Course: <strong class="text-white">Project and Presentation (P&P)</strong> | Cohort: <strong class="text-amber-400">GE-3 (Group 13)</strong>
+        </p>
+
+        <!-- CENTERSTAGE RESOURCE PERSON EXECUTIVE BANNER -->
+        <div class="mt-4 mx-auto max-w-3xl bg-gradient-to-r from-[#0f2444] via-[#172a46] to-[#0f2444] border-2 border-amber-400/90 rounded-2xl p-4 gold-glow shadow-2xl relative overflow-hidden">
+          <div class="absolute -right-8 -top-8 w-24 h-24 bg-amber-500/10 rounded-full blur-xl pointer-events-none"></div>
+          <div class="flex flex-col items-center justify-center text-center space-y-1 relative z-10">
+            <div class="flex items-center gap-2 text-amber-400 font-extrabold text-xs md:text-sm tracking-wider uppercase">
+              <i class="fa-solid fa-star text-amber-400 animate-pulse"></i>
+              <span>RESOURCE PERSON & CURRICULAR ARCHITECT</span>
+              <i class="fa-solid fa-star text-amber-400 animate-pulse"></i>
+            </div>
+            <div class="text-xl md:text-3xl font-black text-amber-300 tracking-wide font-heading">
+              DESIGNED BY MUHAMMAD SHAHZAD
+            </div>
+            <div class="text-xs md:text-sm font-medium text-slate-300">
+              University of Technology and Applied Sciences (UTAS) – Ibra
+            </div>
+            <div class="text-[11px] font-semibold text-sky-300/80 uppercase tracking-widest pt-0.5">
+              General Foundation Programme • Academic Year: 2026–2027
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WIDE LANDSCAPE GRID: TOPIC & ROLES OVERVIEW -->
+      <div class="w-full grid lg:grid-cols-12 gap-6 mb-8 items-stretch">
+        
+        <!-- Left Landscape Column: Topic Overview Card -->
+        <div class="lg:col-span-5 bg-slate-900/90 border border-slate-700/80 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-2 text-sky-400 text-xs font-bold uppercase tracking-wider mb-2">
+              <i class="fa-solid fa-compass"></i>
+              <span>Survey Research Topic</span>
+            </div>
+            <h3 class="text-xl md:text-2xl font-bold text-white mb-2 leading-snug">
+              "Tools Students Use to Plan Their Study and Daily Tasks"
+            </h3>
+            <div class="bg-[#0f2444] border-l-2 border-amber-400 p-2.5 rounded-r-lg mb-3 text-xs text-slate-300 italic">
+              "Dear Respondent, as part of our P&P course, our team is studying how college students use mobile apps, calendar alerts, notes, or paper notebooks to plan their study routines, track homework deadlines, and stay organized."
+            </div>
+            <p class="text-slate-300 text-sm leading-relaxed mb-3">
+              Your group of four will build a rigorous 10-question survey across 3 core survey sections:
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-2.5 text-xs text-slate-200 mb-4">
+              <div class="flex items-center gap-2 bg-slate-800/80 p-2.5 rounded-xl border border-slate-700/60">
+                <i class="fa-solid fa-circle-check text-amber-400 shrink-0"></i>
+                <span><strong>Questions 1–4:</strong> Yes / No Baseline Questions</span>
+              </div>
+              <div class="flex items-center gap-2 bg-slate-800/80 p-2.5 rounded-xl border border-slate-700/60">
+                <i class="fa-solid fa-circle-check text-amber-400 shrink-0"></i>
+                <span><strong>Questions 5–8:</strong> Multiple-Choice Research Items</span>
+              </div>
+              <div class="flex items-center gap-2 bg-slate-800/80 p-2.5 rounded-xl border border-slate-700/60">
+                <i class="fa-solid fa-circle-check text-amber-400 shrink-0"></i>
+                <span><strong>Questions 9–10:</strong> Open Academic Opinion Questions</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-800 text-xs text-slate-400 flex items-start gap-2">
+            <i class="fa-solid fa-lightbulb text-amber-400 mt-0.5 shrink-0"></i>
+            <span><strong>Multi-Pathway Engine:</strong> More than one natural academic syntax exists for each question!</span>
+          </div>
+        </div>
+
+        <!-- Right Landscape Column: Group of 4 Setup Form -->
+        <div class="lg:col-span-7 bg-slate-900/90 border border-slate-700/80 rounded-2xl p-6 shadow-xl flex flex-col justify-between">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-bold text-white flex items-center gap-2">
+              <i class="fa-solid fa-users-gear text-amber-400"></i>
+              <span>Team Setup: Group 13 Members (4 Roles)</span>
+            </h3>
+            <span class="text-xs bg-amber-500/20 text-amber-300 px-2.5 py-1 rounded font-semibold border border-amber-500/30">
+              Cooperative Learning
+            </span>
+          </div>
+
+          <form id="teamSetupForm" class="space-y-3">
+            <div class="grid md:grid-cols-2 gap-3">
+              <!-- Leader -->
+              <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                <div class="flex justify-between items-center mb-1">
+                  <label for="studentLeader" class="text-xs font-bold text-amber-300 flex items-center gap-1.5">
+                    <i class="fa-solid fa-comments"></i> 1. Discussion Leader
+                  </label>
+                  <span class="text-[10px] text-slate-400">Leads discussion</span>
+                </div>
+                <input type="text" id="studentLeader" required placeholder="Enter student full name"
+                       class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-400">
+              </div>
+
+              <!-- Writer (Scribe) -->
+              <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                <div class="flex justify-between items-center mb-1">
+                  <label for="studentWriter" class="text-xs font-bold text-sky-300 flex items-center gap-1.5">
+                    <i class="fa-solid fa-pen-nib"></i> 2. Writer / Scribe
+                  </label>
+                  <span class="text-[10px] text-slate-400">Clicks tiles & submits</span>
+                </div>
+                <input type="text" id="studentWriter" required placeholder="Enter student full name"
+                       class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-sky-400">
+              </div>
+
+              <!-- Checker -->
+              <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                <div class="flex justify-between items-center mb-1">
+                  <label for="studentChecker" class="text-xs font-bold text-emerald-300 flex items-center gap-1.5">
+                    <i class="fa-solid fa-spell-check"></i> 3. Syntax Checker
+                  </label>
+                  <span class="text-[10px] text-slate-400">Checks word order & (?)</span>
+                </div>
+                <input type="text" id="studentChecker" required placeholder="Enter student full name"
+                       class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-emerald-400">
+              </div>
+
+              <!-- Timekeeper -->
+              <div class="bg-slate-800/80 p-3 rounded-xl border border-slate-700">
+                <div class="flex justify-between items-center mb-1">
+                  <label for="studentTimekeeper" class="text-xs font-bold text-purple-300 flex items-center gap-1.5">
+                    <i class="fa-solid fa-stopwatch"></i> 4. Timekeeper
+                  </label>
+                  <span class="text-[10px] text-slate-400">Keeps team pace (2-3m)</span>
+                </div>
+                <input type="text" id="studentTimekeeper" required placeholder="Enter student full name"
+                       class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-1.5 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-purple-400">
+              </div>
+            </div>
+
+            <button type="submit"
+                    class="w-full mt-2 py-3 px-6 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-base rounded-xl transition duration-200 shadow-lg flex items-center justify-center gap-2 group">
+              <span>Start Group Studio Workshop</span>
+              <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- SCREEN 2: ACTIVE QUESTION WORKBENCH (FULL LANDSCAPE SPLIT SCREEN) -->
+    <section id="workshopScreen" class="hidden w-full">
+      
+      <!-- QUESTION TOP HEADER STRIP -->
+      <div class="bg-slate-900/90 border border-slate-700/80 rounded-2xl px-5 py-3 shadow-xl mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div class="flex items-center gap-3">
+          <span id="questionBadgeNumber" class="px-3 py-1 bg-amber-500 text-slate-950 font-black text-sm rounded-lg">
+            Question 1
+          </span>
+          <span id="questionSectionBadge" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-800 text-sky-400 border border-sky-400/20">
+            Section A: Yes / No
+          </span>
+        </div>
+        <div class="text-xs text-slate-300 flex items-center gap-2">
+          <i class="fa-solid fa-users text-amber-400"></i>
+          <span>Active Scribe: <strong id="activeScribeName" class="text-amber-300">Writer</strong></span>
+        </div>
+      </div>
+
+      <!-- 2-COLUMN LANDSCAPE WORKBENCH GRID -->
+      <div class="grid lg:grid-cols-12 gap-5 items-start">
+        
+        <!-- LEFT PANEL: RESEARCH GOAL, SCENARIO & DISCUSSION PROMPTS (40% width in landscape) -->
+        <div class="lg:col-span-5 space-y-4">
+          
+          <div class="bg-slate-900/90 border border-slate-700/80 rounded-2xl p-5 shadow-xl">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+              <div class="flex items-center gap-2 text-amber-400 font-bold text-sm">
+                <i class="fa-solid fa-brain"></i>
+                <span>Phase 1: Research Context & Objective</span>
+              </div>
+              <span class="text-[11px] text-slate-400">Step 1 of 2</span>
+            </div>
+
+            <!-- Relatable Student Scenario -->
+            <div class="mb-4">
+              <span class="text-[11px] uppercase font-bold tracking-wider text-slate-400 block mb-1.5">Campus Observation:</span>
+              <div class="bg-[#0f2444] border-l-4 border-amber-400 p-3.5 rounded-r-xl">
+                <p id="scenarioText" class="text-sm text-slate-200 italic leading-relaxed">
+                  <!-- Dynamically populated scenario -->
+                </p>
+              </div>
+            </div>
+
+            <!-- Group Discussion Prompts -->
+            <div class="space-y-3 mb-4">
+              <div class="bg-slate-800/70 p-3 rounded-xl border border-slate-700/60">
+                <span class="text-xs font-bold text-sky-300 flex items-center gap-1.5 mb-1">
+                  🗣️ Discussion Prompt 1:
+                </span>
+                <p id="promptQ1" class="text-xs text-slate-300 leading-normal">
+                  What real student habit or daily problem are we looking at here?
+                </p>
+              </div>
+              <div class="bg-slate-800/70 p-3 rounded-xl border border-slate-700/60">
+                <span class="text-xs font-bold text-emerald-300 flex items-center gap-1.5 mb-1">
+                  🗣️ Discussion Prompt 2:
+                </span>
+                <p id="promptQ2" class="text-xs text-slate-300 leading-normal">
+                  What kind of clear answer do we want from our classmates?
+                </p>
+              </div>
+            </div>
+
+            <!-- Unlock Puzzle Button -->
+            <div id="phase1Container">
+              <button id="btnUnlockPhase2" class="w-full py-2.5 px-4 bg-sky-600 hover:bg-sky-500 text-white font-bold text-sm rounded-xl transition duration-150 flex items-center justify-center gap-2 shadow-md">
+                <span>We discussed this! Open Sentence Puzzle</span>
+                <i class="fa-solid fa-puzzle-piece"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Quick Cooperative Role Tip (Landscape Sidebar) -->
+          <div class="hidden lg:block bg-slate-900/60 border border-slate-800 rounded-xl p-3.5 text-xs text-slate-400">
+            <span class="font-bold text-slate-300 block mb-1 flex items-center gap-1.5">
+              <i class="fa-solid fa-lightbulb text-amber-400"></i> Cooperative Strategy:
+            </span>
+            <span><strong>Leader</strong> asks the prompts. <strong>Checker</strong> verifies syntax & question mark. <strong>Writer</strong> clicks tiles.</span>
+          </div>
+
+        </div>
+
+        <!-- RIGHT PANEL: INTERACTIVE PUZZLE ENGINE & APPROVAL CARD (60% width in landscape) -->
+        <div class="lg:col-span-7 space-y-4">
+          
+          <!-- PHASE 2: Connect the Tiles (Pure Puzzle Assembly – No Blueprints) -->
+          <div id="phase2Container" class="hidden bg-slate-900/90 border border-slate-700/80 rounded-2xl p-5 shadow-xl space-y-4">
+            
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2.5">
+              <div class="flex items-center gap-2 text-amber-400 font-bold text-sm">
+                <i class="fa-solid fa-puzzle-piece"></i>
+                <span>Phase 2: Assemble Your Survey Question</span>
+              </div>
+              <span class="text-xs text-slate-400 italic">No formulas — build naturally!</span>
+            </div>
+
+            <!-- Open Assembly Line (Strictly No Blueprints) -->
+            <div>
+              <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 flex items-center justify-between">
+                <span>Sentence Construction Tray:</span>
+                <button id="btnClearAssembly" class="text-xs text-slate-400 hover:text-amber-400 flex items-center gap-1 transition">
+                  <i class="fa-solid fa-arrow-rotate-left"></i> Reset Tray
+                </button>
+              </div>
+              <div class="bg-[#091424] border-2 border-dashed border-slate-700 rounded-xl p-3.5 min-h-[96px] flex flex-wrap items-center gap-2 transition-colors" id="assemblyDropArea">
+                <div id="assemblyPlaceholder" class="text-slate-500 text-sm italic w-full text-center py-4">
+                  Click tiles from your word bank below to build your group's question. More than one natural way is possible!
+                </div>
+              </div>
+              <span class="text-[11px] text-slate-400 mt-1 block">
+                Click any placed tile above to return it to the bank.
+              </span>
+            </div>
+
+            <!-- Scrambled Word Bank -->
+            <div>
+              <div class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center justify-between">
+                <span>Available Word & Phrase Tiles:</span>
+                <span class="text-[11px] text-amber-400/90 font-medium">⚠️ Watch out: Impostor tiles exist!</span>
+              </div>
+              <div id="tilesBankContainer" class="flex flex-wrap gap-2 p-3.5 bg-slate-800/60 rounded-xl border border-slate-700/60 min-h-[90px]">
+                <!-- Dynamically populated scrambled tiles -->
+              </div>
+            </div>
+
+            <!-- Validation Submission Action -->
+            <div class="pt-2 flex justify-end">
+              <button id="btnSubmitQuestion" class="px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-black text-sm rounded-xl transition duration-150 shadow-lg flex items-center gap-2">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Submit Question for Validation</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- PHASE 3: Approval Banner (When correct) -->
+          <div id="phase3ApprovedCard" class="hidden bg-gradient-to-br from-emerald-950/80 via-slate-900 to-slate-900 border-2 border-emerald-500/70 rounded-2xl p-6 success-glow">
+            <div class="flex items-start gap-4">
+              <div class="w-12 h-12 rounded-xl bg-emerald-500 text-slate-950 flex items-center justify-center text-2xl font-black shrink-0">
+                <i class="fa-solid fa-check"></i>
+              </div>
+              <div class="flex-grow">
+                <div class="text-xs font-bold uppercase tracking-wider text-emerald-400 mb-1">
+                  ✅ Validated & Approved by Studio Engine!
+                </div>
+                <h4 id="approvedQuestionDisplay" class="text-lg md:text-xl font-bold text-white mb-3">
+                  <!-- Approved Question Text -->
+                </h4>
+                
+                <!-- Response Type Format -->
+                <div class="bg-slate-950/60 rounded-xl p-3.5 border border-emerald-500/30 mb-4">
+                  <span class="text-xs font-semibold text-slate-400 block mb-1">Survey Response Format for Respondents:</span>
+                  <div id="approvedChoicesDisplay" class="text-sm font-medium text-amber-300">
+                    <!-- Choices or format displayed here -->
+                  </div>
+                </div>
+
+                <!-- Button to advance -->
+                <div class="flex justify-end">
+                  <button id="btnNextQuestion" class="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-sm rounded-xl transition flex items-center gap-2 shadow-lg">
+                    <span>Proceed to Next Question</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 5-SENTENCE PRACTICE & CONSOLIDATION WORKSHOP MODAL (EXPANDED LANDSCAPE DIALOG) -->
+    <div id="consolidationModal" class="hidden fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+      <div class="bg-slate-900 border-2 border-amber-500/80 rounded-2xl max-w-4xl w-full p-6 shadow-2xl relative max-h-[92vh] flex flex-col">
+        
+        <!-- Modal Header -->
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3 mb-3">
+          <div class="flex items-center gap-2.5">
+            <span class="w-8 h-8 rounded-lg bg-amber-500/20 text-amber-400 flex items-center justify-center font-bold">
+              <i class="fa-solid fa-wrench"></i>
+            </span>
+            <div>
+              <h3 class="text-base font-bold text-white">Group Practice & Consolidation Workshop</h3>
+              <p class="text-xs text-slate-400">Discuss with your team to master the grammar pattern before rebuilding.</p>
+            </div>
+          </div>
+          <span class="text-xs bg-amber-500 text-slate-950 font-bold px-2.5 py-0.5 rounded-full">
+            5 Quick Drills
+          </span>
+        </div>
+
+        <!-- Supportive Prompt Message -->
+        <div class="bg-amber-950/40 border border-amber-500/40 rounded-xl p-3 mb-3 text-xs text-amber-200 flex items-start gap-2.5">
+          <i class="fa-solid fa-circle-info text-amber-400 mt-0.5"></i>
+          <div>
+            <strong>Sentence Construction Notice:</strong> The words you assembled do not form a natural academic pattern, or an impostor tile was used. Complete these 5 real-life campus sentences with your group to unlock the question tray!
+          </div>
+        </div>
+
+        <!-- 5 Interactive Sentence Items Container (Grid in Landscape) -->
+        <div id="consolidationDrillsList" class="grid md:grid-cols-2 gap-3 overflow-y-auto pr-1 flex-grow">
+          <!-- Dynamically populated 5 sentences with interactive choice toggles -->
+        </div>
+
+        <!-- Modal Footer Actions -->
+        <div class="mt-4 pt-3 border-t border-slate-800 flex items-center justify-between">
+          <span id="drillFeedbackText" class="text-xs font-semibold text-slate-400">
+            Select the correct choice in all 5 sentences.
+          </span>
+          <button id="btnVerifyConsolidation" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs md:text-sm rounded-xl transition duration-150 flex items-center gap-2">
+            <span>Verify 5 Patterns</span>
+            <i class="fa-solid fa-circle-check"></i>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SCREEN 3: FINAL CELEBRATION & PORTFOLIO EXPORT -->
+    <section id="finalExportScreen" class="hidden w-full max-w-4xl mx-auto flex flex-col items-center">
+      
+      <!-- CELEBRATION BANNER -->
+      <div class="w-full text-center mb-6">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-tr from-amber-400 to-amber-600 text-slate-950 text-3xl font-black mb-3 shadow-lg animate-bounce">
+          <i class="fa-solid fa-trophy"></i>
+        </div>
+        <h2 class="text-3xl md:text-4xl font-black text-white mb-2">
+          🎉 Congratulations GE-3 Group 13!
+        </h2>
+        <p class="text-slate-300 text-sm md:text-base">
+          All 10 Academic Survey Questions have been constructed, validated, and finalized!
+        </p>
+      </div>
+
+      <!-- PORTFOLIO DOCUMENT CONTAINER (READY FOR PDF/PRINT/COPY) -->
+      <div class="w-full bg-slate-900 border-2 border-amber-400/50 rounded-2xl p-6 md:p-8 shadow-2xl mb-6 survey-export-container">
+        
+        <!-- Document Header -->
+        <div class="border-b-2 border-slate-700 pb-5 mb-6 text-center">
+          <div class="text-xs uppercase tracking-widest text-slate-400 font-semibold mb-1">
+            University of Technology and Applied Sciences (UTAS) – Ibra
+          </div>
+          <div class="text-xs uppercase tracking-wider text-amber-400 font-bold mb-2">
+            General Foundation Programme • Course: Project and Presentation (P&P)
+          </div>
+          <h2 class="text-2xl md:text-3xl font-extrabold text-white mb-2">
+            STUDENT ACADEMIC RESEARCH QUESTIONNAIRE
+          </h2>
+          <div class="text-sm font-semibold text-sky-400">
+            Topic: Tools Students Use to Plan Their Study and Daily Tasks
+          </div>
+
+          <!-- Respondent Introduction Note -->
+          <div class="mt-3 max-w-2xl mx-auto p-3 bg-slate-800/60 rounded-xl border border-slate-700 text-xs text-slate-300 text-left leading-relaxed">
+            <strong>Dear Respondent:</strong> My name is [Student Name], and I am a Level 4 student in the General Foundation Programme (Group 13). As part of our Project and Presentation course, my team and I are conducting a research study on <em>Tools Students Use to Plan Their Study and Daily Tasks</em> among college students. We appreciate you taking 2–3 minutes to answer the following questions. Responses remain anonymous and will be used solely for academic research purposes. Thank you for your support and cooperation!
+          </div>
+
+          <!-- Group Members Metadata -->
+          <div class="mt-4 pt-4 border-t border-slate-800 grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+            <div class="bg-slate-800/80 p-2 rounded-lg">
+              <span class="text-slate-400 block text-[10px] uppercase font-bold">Discussion Leader</span>
+              <strong id="finalMemberLeader" class="text-amber-300">Student 1</strong>
+            </div>
+            <div class="bg-slate-800/80 p-2 rounded-lg">
+              <span class="text-slate-400 block text-[10px] uppercase font-bold">Writer / Scribe</span>
+              <strong id="finalMemberWriter" class="text-sky-300">Student 2</strong>
+            </div>
+            <div class="bg-slate-800/80 p-2 rounded-lg">
+              <span class="text-slate-400 block text-[10px] uppercase font-bold">Syntax Checker</span>
+              <strong id="finalMemberChecker" class="text-emerald-300">Student 3</strong>
+            </div>
+            <div class="bg-slate-800/80 p-2 rounded-lg">
+              <span class="text-slate-400 block text-[10px] uppercase font-bold">Timekeeper</span>
+              <strong id="finalMemberTimekeeper" class="text-purple-300">Student 4</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Demographic Questions Section -->
+        <div class="mb-6 bg-slate-850 p-4 rounded-xl border border-slate-800">
+          <h4 class="text-xs font-bold uppercase tracking-wider text-amber-400 mb-3 flex items-center gap-1.5">
+            <i class="fa-solid fa-id-card"></i> Section 1: Respondent Demographic Information
+          </h4>
+          <div class="space-y-3 text-xs text-slate-300">
+            <div class="flex flex-wrap items-center gap-4">
+              <span class="font-semibold text-white">Gender:</span>
+              <label class="flex items-center gap-1.5"><input type="checkbox" disabled class="rounded"> [ ] Male</label>
+              <label class="flex items-center gap-1.5"><input type="checkbox" disabled class="rounded"> [ ] Female</label>
+            </div>
+            <div class="flex flex-wrap items-center gap-4">
+              <span class="font-semibold text-white">Status:</span>
+              <label class="flex items-center gap-1.5"><input type="checkbox" disabled class="rounded"> [ ] Foundation Student</label>
+              <label class="flex items-center gap-1.5"><input type="checkbox" disabled class="rounded"> [ ] Post-Foundation Student</label>
+              <label class="flex items-center gap-1.5"><input type="checkbox" disabled class="rounded"> [ ] Other</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- 10 Approved Questions List -->
+        <div class="space-y-4 mb-8" id="finalQuestionsListContainer">
+          <!-- Dynamically populated with all approved questions and their options -->
+        </div>
+
+        <!-- OFFICIAL PORTFOLIO FOOTER CITATION -->
+        <div class="border-t-2 border-amber-500/40 pt-5 mt-6 text-center bg-slate-950/60 p-4 rounded-xl">
+          <div class="text-xs font-bold text-slate-200">
+            Class: <span class="text-amber-400">GE-3 Group 13</span> | Course: <span class="text-amber-400">Project and Presentation (P&P)</span>
+          </div>
+          <div class="text-xs font-extrabold text-amber-300 tracking-wide mt-1">
+            Survey Framework & Studio: Designed by Muhammad Shahzad, UTAS Ibra (2026–2027)
+          </div>
+          <div class="text-[11px] text-slate-500 mt-1">
+            General Foundation Programme • Verified Academic Portfolio Asset
+          </div>
+        </div>
+
+      </div>
+
+      <!-- EXPORT ACTIONS TOOLBAR -->
+      <div class="w-full flex flex-wrap items-center justify-center gap-3 no-print mb-12">
+        <button id="btnCopySurvey" class="px-5 py-3 bg-slate-800 hover:bg-slate-700 text-white font-bold text-sm rounded-xl border border-slate-600 transition flex items-center gap-2 shadow">
+          <i class="fa-solid fa-copy text-amber-400"></i>
+          <span>Copy Full Survey Text</span>
+        </button>
+
+        <button id="btnPrintSurvey" class="px-6 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-sm rounded-xl transition flex items-center gap-2 shadow-lg">
+          <i class="fa-solid fa-print"></i>
+          <span>Print / Save as PDF</span>
+        </button>
+
+        <button id="btnRestartStudio" class="px-4 py-3 bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-slate-200 font-semibold text-xs rounded-xl border border-slate-800 transition">
+          <i class="fa-solid fa-rotate-right mr-1"></i> Restart Studio
+        </button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- TOAST NOTIFICATION CONTAINER -->
+  <div id="toastNotification" class="fixed bottom-5 right-5 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="bg-slate-900 border border-amber-500/60 text-white px-4 py-3 rounded-xl shadow-2xl flex items-center gap-3">
+      <i id="toastIcon" class="fa-solid fa-circle-check text-amber-400 text-lg"></i>
+      <span id="toastMessage" class="text-xs md:text-sm font-semibold">Notification</span>
+    </div>
+  </div>
+
+  <script>
+    /* Complete Question Curriculum & Validation Database for "Tools Students Use to Plan Their Study and Daily Tasks" */
+    const QUESTIONS_DATA = [
+      /* Question 1 */
+      {
+        id: 1,
+        section: "Section A: Yes / No Questions",
+        title: "Using Mobile Apps or Paper Notebooks",
+        scenario: "College learners manage many daily assignments and quizzes, and they choose between digital planner apps or traditional paper notebooks to organize their schedule.",
+        prompt1: "Do students use mobile apps or paper notebooks to keep track of their study tasks and submission deadlines?",
+        prompt2: "We want respondents to confirm their habit with a simple Yes, No, or Not sure answer.",
+        validWays: [
+          "Do you use mobile apps or paper notebooks to plan your daily study tasks and assignment deadlines?",
+          "To plan your daily study tasks and assignment deadlines, do you use mobile apps or paper notebooks?",
+          "Do you use paper notebooks or mobile apps to plan your daily study tasks and assignment deadlines?"
+        ],
+        tiles: [
+          "Do you use", "mobile apps or paper notebooks",
+          "to plan your daily study tasks", "and assignment deadlines?",
+          "To plan your daily study tasks and assignment deadlines,",
+          "paper notebooks or mobile apps", "do you use mobile apps or paper notebooks?"
+        ],
+        impostors: ["Are you use", "for plan your daily study tasks"],
+        responseType: "Yes / No / Not sure",
+        choices: ["Yes", "No", "Not sure"],
+        drill: [
+          { question: "1. [Do / Are] you use a digital calendar for classes?", choices: ["Do", "Are"], correct: "Do" },
+          { question: "2. She bought a journal [to plan / for plan] her weekly tasks.", choices: ["to plan", "for plan"], correct: "to plan" },
+          { question: "3. [Does / Is] your classmate write down all homework deadlines?", choices: ["Does", "Is"], correct: "Does" },
+          { question: "4. Learners download apps [to organize / to organizing] their notes.", choices: ["to organize", "to organizing"], correct: "to organize" },
+          { question: "5. [Do / Have] you review your timetable every morning?", choices: ["Do", "Have"], correct: "Do" }
+        ]
+      },
+
+      /* Question 2 */
+      {
+        id: 2,
+        section: "Section A: Yes / No Questions",
+        title: "Phone Reminders and Submitting on Time",
+        scenario: "Smartphones provide notifications, recurring alarms, and calendar alerts that remind students hours before an assignment portal closes.",
+        prompt1: "Do phone reminders or calendar notifications assist students in submitting coursework before deadlines?",
+        prompt2: "We want respondents to indicate if automatic notifications help prevent late submissions.",
+        validWays: [
+          "Do phone reminders or calendar notifications help you submit your college homework on time?",
+          "Do calendar notifications or phone reminders help you submit your college homework on time?",
+          "Do phone reminders or calendar notifications help you to submit your college homework on time?"
+        ],
+        tiles: [
+          "Do phone reminders", "or calendar notifications",
+          "help you submit", "your college homework",
+          "on time?", "Do calendar notifications",
+          "or phone reminders", "help you to submit"
+        ],
+        impostors: ["Does phone reminders", "helping you submit"],
+        responseType: "Yes / No / Not sure",
+        choices: ["Yes", "No", "Not sure"],
+        drill: [
+          { question: "1. Phone alerts [help / helps] students remember quiz dates.", choices: ["help", "helps"], correct: "help" },
+          { question: "2. [Do / Does] phone reminders notify you before class?", choices: ["Do", "Does"], correct: "Do" },
+          { question: "3. Alarms help us [submit / submitting] projects before 11 PM.", choices: ["submit", "submitting"], correct: "submit" },
+          { question: "4. Digital notes [help / helping] groups coordinate tasks.", choices: ["help", "helping"], correct: "help" },
+          { question: "5. [Do / Are] calendar alerts keep your study team on schedule?", choices: ["Do", "Are"], correct: "Do" }
+        ]
+      },
+
+      /* Question 3 */
+      {
+        id: 3,
+        section: "Section A: Yes / No Questions",
+        title: "Missed Deadline Due to Not Writing It Down",
+        scenario: "When students rely purely on memory and forget to write an assignment in an agenda or app, they risk missing crucial submission deadlines.",
+        prompt1: "Has a student ever failed to submit an assignment on time because they forgot to record it in a planner or app?",
+        prompt2: "We want respondents to share whether failing to record deadlines has led to a late submission.",
+        validWays: [
+          "Have you ever missed an assignment deadline because you forgot to write it down in a planner or app?",
+          "Because you forgot to write it down in a planner or app, have you ever missed an assignment deadline?",
+          "Have you ever missed a homework deadline because you forgot to write it down in a planner or app?"
+        ],
+        tiles: [
+          "Have you ever missed", "an assignment deadline",
+          "because you forgot", "to write it down",
+          "in a planner or app?", "Because you forgot to write it down in a planner or app,",
+          "have you ever missed an assignment deadline?", "a homework deadline"
+        ],
+        impostors: ["Did you ever missed", "because you forget to write"],
+        responseType: "Yes / No / Not sure",
+        choices: ["Yes", "No", "Not sure"],
+        drill: [
+          { question: "1. Have you ever [forgotten / forgot] to upload a file?", choices: ["forgotten", "forgot"], correct: "forgotten" },
+          { question: "2. He lost marks [because / because of] he forgot the due date.", choices: ["because", "because of"], correct: "because" },
+          { question: "3. Don't forget [to record / recording] the project date in your diary.", choices: ["to record", "recording"], correct: "to record" },
+          { question: "4. Have they ever [missed / miss] an important morning tutorial?", choices: ["missed", "miss"], correct: "missed" },
+          { question: "5. She forgot [to set / for set] a reminder on her phone.", choices: ["to set", "for set"], correct: "to set" }
+        ]
+      },
+
+      /* Question 4 */
+      {
+        id: 4,
+        section: "Section A: Yes / No Questions",
+        title: "Less Stressed by Planning Weeks in Advance",
+        scenario: "Setting aside time to map out study blocks and deadlines for the upcoming week can provide mental clarity and reduce academic anxiety.",
+        prompt1: "Do students experience lower stress levels when they write down their study schedule for the upcoming week in advance?",
+        prompt2: "We want respondents to report whether preparing a weekly timetable eases stress.",
+        validWays: [
+          "Do you feel less stressed when you write down your study schedule for the week in advance?",
+          "When you write down your study schedule for the week in advance, do you feel less stressed?",
+          "In advance, do you feel less stressed when you write down your study schedule for the week?"
+        ],
+        tiles: [
+          "Do you feel less stressed", "when you write down",
+          "your study schedule", "for the week in advance?",
+          "When you write down your study schedule for the week in advance,",
+          "do you feel less stressed?", "In advance,"
+        ],
+        impostors: ["Are you feel less stressed", "when you writing down"],
+        responseType: "Yes / No / Not sure",
+        choices: ["Yes", "No", "Not sure"],
+        drill: [
+          { question: "1. Students feel [less / lesser] anxious when prepared.", choices: ["less", "lesser"], correct: "less" },
+          { question: "2. She stays calm when she [writes / writing] down her schedule.", choices: ["writes", "writing"], correct: "writes" },
+          { question: "3. Prepare your notes [in advance / on advance] to avoid panic.", choices: ["in advance", "on advance"], correct: "in advance" },
+          { question: "4. [Do / Are] you feel confident before weekly quizzes?", choices: ["Do", "Are"], correct: "Do" },
+          { question: "5. He feels relaxed when he [plans / planned] his study hours.", choices: ["plans", "planned"], correct: "plans" }
+        ]
+      },
+
+      /* Question 5 */
+      {
+        id: 5,
+        section: "Section B: Multiple-Choice Questions",
+        title: "Most Frequent Tool Used to Remember Deadlines",
+        scenario: "Students select from different organizational tools—calendar applications, to-do lists, paper notebooks, or simply relying on memory.",
+        prompt1: "Which specific tool or method do students use most often to remember their study sessions, exam dates, and homework deadlines?",
+        prompt2: "We want respondents to pick their primary planning medium.",
+        validWays: [
+          "Which tool do you use most often to remember your study times, exams, and homework deadlines?",
+          "To remember your study times, exams, and homework deadlines, which tool do you use most often?",
+          "What tool do you use most often to remember your study times, exams, and homework deadlines?"
+        ],
+        tiles: [
+          "Which tool do you use", "most often to remember",
+          "your study times, exams,", "and homework deadlines?",
+          "To remember your study times, exams, and homework deadlines,",
+          "which tool do you use most often?", "What tool do you use"
+        ],
+        impostors: ["Which tool are you use", "most often for remember"],
+        responseType: "Multiple Choice (Select One)",
+        choices: [
+          "A) Mobile calendar apps (e.g., Google Calendar, Apple Calendar)",
+          "B) Notes or To-Do list apps on my smartphone",
+          "C) Paper notebooks, daily planners, or sticky notes",
+          "D) I do not write them down (I rely only on my memory)"
+        ],
+        drill: [
+          { question: "1. [Which / What of] tool is best for setting alert tones?", choices: ["Which", "What of"], correct: "Which" },
+          { question: "2. Use a planner [to remember / for remember] due dates.", choices: ["to remember", "for remember"], correct: "to remember" },
+          { question: "3. How often [do / are] you look at your sticky notes?", choices: ["do", "are"], correct: "do" },
+          { question: "4. He uses a notebook [to write / for write] daily tasks.", choices: ["to write", "for write"], correct: "to write" },
+          { question: "5. [What / Which] tool helps you most when preparing for exams?", choices: ["What", "Which"], correct: "What" }
+        ]
+      },
+
+      /* Question 6 */
+      {
+        id: 6,
+        section: "Section B: Multiple-Choice Questions",
+        title: "Frequency of Checking or Updating Planner",
+        scenario: "How frequently a planner is updated determines its effectiveness, ranging from several times a day to checking it only before exams.",
+        prompt1: "How often do students open, check, or modify their study planner or mobile planning app on college days?",
+        prompt2: "We want respondents to select the frequency bracket that describes their routine.",
+        validWays: [
+          "How often do you check or update your study planner or mobile planning app during college days?",
+          "During college days, how often do you check or update your study planner or mobile planning app?",
+          "How frequently do you check or update your study planner or mobile planning app during college days?"
+        ],
+        tiles: [
+          "How often do you check", "or update your study planner",
+          "or mobile planning app", "during college days?",
+          "During college days,", "how often do you check or update your study planner",
+          "How frequently do you check"
+        ],
+        impostors: ["How many often do you check", "check or updating"],
+        responseType: "Multiple Choice (Select One)",
+        choices: [
+          "A) Multiple times a day",
+          "B) Once a day in the evening",
+          "C) A few times a week",
+          "D) Only right before exam weeks"
+        ],
+        drill: [
+          { question: "1. [How often / How many] do you check your college portal?", choices: ["How often", "How many"], correct: "How often" },
+          { question: "2. She checks her to-do list twice [a / the] day.", choices: ["a", "the"], correct: "a" },
+          { question: "3. Students should [update / updates] their calendar weekly.", choices: ["update", "updates"], correct: "update" },
+          { question: "4. [How frequently / How much] do you review lecture slides?", choices: ["How frequently", "How much"], correct: "How frequently" },
+          { question: "5. They log in [during / while] the afternoon break.", choices: ["during", "while"], correct: "during" }
+        ]
+      },
+
+      /* Question 7 */
+      {
+        id: 7,
+        section: "Section B: Multiple-Choice Questions",
+        title: "Main Reason for Not Using Planning Tools",
+        scenario: "Some students avoid planning apps or agendas due to time constraints, forgetting to check them, lack of technical know-how, or skepticism about their value.",
+        prompt1: "What is the primary factor that prevents students from keeping a daily planner or planning application?",
+        prompt2: "We want respondents to identify the primary obstacle to adopting planning tools.",
+        validWays: [
+          "What is the main reason some students do not use a daily planner or mobile planning app?",
+          "Why do some students not use a daily planner or mobile planning app?",
+          "What is the primary reason some students do not use a daily planner or mobile planning app?"
+        ],
+        tiles: [
+          "What is the main reason", "some students do not use",
+          "a daily planner", "or mobile planning app?",
+          "Why do some students not use", "a daily planner or mobile planning app?",
+          "What is the primary reason"
+        ],
+        impostors: ["Why is the main reason", "does not use"],
+        responseType: "Multiple Choice (Select One)",
+        choices: [
+          "A) It takes too much time to write down daily tasks",
+          "B) Forgetting to open the app or check the notebook",
+          "C) Not knowing how to use planning apps effectively",
+          "D) Believing that planning tools are not useful"
+        ],
+        drill: [
+          { question: "1. [What / Why] is the main reason for student absences?", choices: ["What", "Why"], correct: "What" },
+          { question: "2. Some students [do not / does not] keep a schedule.", choices: ["do not", "does not"], correct: "do not" },
+          { question: "3. [Why / What] do many learners avoid paper agendas?", choices: ["Why", "What"], correct: "Why" },
+          { question: "4. It takes [too much / too many] effort to record every small task.", choices: ["too much", "too many"], correct: "too much" },
+          { question: "5. A busy student [forgets / forget] to open the app.", choices: ["forgets", "forget"], correct: "forgets" }
+        ]
+      },
+
+      /* Question 8 */
+      {
+        id: 8,
+        section: "Section B: Multiple-Choice Questions",
+        title: "Most Helpful Feature of Mobile Planning Apps",
+        scenario: "Planning apps offer diverse functions: automatic alarms, color-coded task tags, device synchronisation, and interactive checklists.",
+        prompt1: "Which specific capability of mobile planning software offers the greatest advantage for college learners?",
+        prompt2: "We want respondents to evaluate the single most beneficial feature.",
+        validWays: [
+          "In your opinion, which feature of mobile planning apps is most helpful for college students?",
+          "Which feature of mobile planning apps is most helpful for college students in your opinion?",
+          "In your view, which feature of mobile planning apps is most helpful for college students?"
+        ],
+        tiles: [
+          "In your opinion,", "which feature of mobile planning apps",
+          "is most helpful", "for college students?",
+          "in your opinion?", "In your view,",
+          "what feature of mobile planning apps"
+        ],
+        impostors: ["are most helpful", "is most help"],
+        responseType: "Multiple Choice (Select One)",
+        choices: [
+          "A) Setting automatic alarm reminders for assignment deadlines",
+          "B) Color-coding different subjects and homework tasks",
+          "C) Syncing the schedule across mobile phone and laptop",
+          "D) Checking off completed tasks from a list"
+        ],
+        drill: [
+          { question: "1. Alarm notifications [are / is] very convenient for busy students.", choices: ["are", "is"], correct: "are" },
+          { question: "2. Which feature [is / are] most helpful to you?", choices: ["is", "are"], correct: "is" },
+          { question: "3. Color-coding makes notes [easier / easily] to read.", choices: ["easier", "easily"], correct: "easier" },
+          { question: "4. In your [opinion / view point], alarms keep us on time.", choices: ["opinion", "view point"], correct: "opinion" },
+          { question: "5. Syncing across devices is helpful [for / to] learners.", choices: ["for", "to"], correct: "for" }
+        ]
+      },
+
+      /* Question 9 */
+      {
+        id: 9,
+        section: "Section C: Writing Opinion Questions",
+        title: "Impact on Time Management and Exam Marks",
+        scenario: "Consistent planning of study sessions and review intervals can enhance time control, lessen procrastination, and lead to stronger grades.",
+        prompt1: "How does utilizing a daily planner or planning application boost a student's time management and overall exam performance?",
+        prompt2: "We want respondents to provide an analytical qualitative opinion.",
+        validWays: [
+          "In your opinion, how does using a daily planner or planning app improve a student's time management and exam marks?",
+          "How does using a daily planner or planning app improve a student's time management and exam marks in your opinion?",
+          "In your view, how does using a daily planner or planning app improve a student's time management and exam marks?"
+        ],
+        tiles: [
+          "In your opinion,", "how does using a daily planner",
+          "or planning app", "improve a student's time management",
+          "and exam marks?", "in your opinion?", "In your view,",
+          "how does using a planning app or daily planner"
+        ],
+        impostors: ["how does using a daily planner improves", "how do using a daily planner"],
+        responseType: "Open-Ended Response (Opinion)",
+        choices: ["Open-ended text response (e.g., 2–3 reflective sentences)"],
+        drill: [
+          { question: "1. How does planning [improve / improves] student test results?", choices: ["improve", "improves"], correct: "improve" },
+          { question: "2. Setting clear goals [boosts / boost] student confidence.", choices: ["boosts", "boost"], correct: "boosts" },
+          { question: "3. In a [student's / students] view, structure reduces cramming.", choices: ["student's", "students"], correct: "student's" },
+          { question: "4. Effective planning [leads / lead] to better time management.", choices: ["leads", "lead"], correct: "leads" },
+          { question: "5. How does organized study [help / helps] memory retention?", choices: ["help", "helps"], correct: "help" }
+        ]
+      },
+
+      /* Question 10 */
+      {
+        id: 10,
+        section: "Section C: Writing Opinion Questions",
+        title: "Recommended Tool or Method for New Students",
+        scenario: "Experienced foundation learners develop practical insights on which applications or scheduling techniques work best for freshman students.",
+        prompt1: "What specific app, tool, or scheduling technique would you recommend to assist new college students in organizing their daily routines?",
+        prompt2: "We want constructive, actionable advice for incoming GFP students.",
+        validWays: [
+          "What is one specific app, tool, or planning method you recommend to help new college students stay organized with their daily tasks?",
+          "To help new college students stay organized with their daily tasks, what is one specific app, tool, or planning method you recommend?",
+          "Which specific app, tool, or planning method do you recommend to help new college students stay organized with their daily tasks?"
+        ],
+        tiles: [
+          "What is one specific app, tool,", "or planning method you recommend",
+          "to help new college students", "stay organized with their daily tasks?",
+          "To help new college students stay organized with their daily tasks,",
+          "what is one specific app, tool, or planning method you recommend?",
+          "Which specific app, tool, or planning method do you recommend"
+        ],
+        impostors: ["to helping new college students", "for stay organized"],
+        responseType: "Open-Ended Response (Actionable Advice)",
+        choices: ["Open-ended text response (Specific tool, app, or planning method)"],
+        drill: [
+          { question: "1. I recommend Google Calendar [to help / to helping] manage deadlines.", choices: ["to help", "to helping"], correct: "to help" },
+          { question: "2. What technique do you advise [to keep / for keep] daily focus?", choices: ["to keep", "for keep"], correct: "to keep" },
+          { question: "3. Use a checklist [to stay / to staying] organized during project weeks.", choices: ["to stay", "to staying"], correct: "to stay" },
+          { question: "4. Which app do you recommend [for / with] new university learners?", choices: ["for", "with"], correct: "for" },
+          { question: "5. A simple notebook is useful [to track / for track] daily assignments.", choices: ["to track", "for track"], correct: "to track" }
+        ]
+      }
+    ];
+
+    // Studio Application State
+    const state = {
+      team: {
+        leader: '',
+        writer: '',
+        checker: '',
+        timekeeper: ''
+      },
+      currentQuestionIndex: 0, // 0 to 9
+      assembledTiles: [],      // array of tile strings
+      availableTiles: [],      // array of tile strings
+      approvedQuestions: {},   // index -> approved question text
+      consolidationSelections: [null, null, null, null, null]
+    };
+
+    // Web Audio Synthesizer (No external audio file dependencies)
+    const AudioEngine = {
+      ctx: null,
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) {
+            this.ctx = new AudioContext();
+          }
+        }
+      },
+      playPop() {
+        this.init();
+        if (!this.ctx) return;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(450, this.ctx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(700, this.ctx.currentTime + 0.08);
+        gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.08);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start();
+        osc.stop(this.ctx.currentTime + 0.08);
+      },
+      playSuccess() {
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        [523.25, 659.25, 783.99, 1046.50].forEach((freq, i) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(freq, now + i * 0.09);
+          gain.gain.setValueAtTime(0.15, now + i * 0.09);
+          gain.gain.linearRampToValueAtTime(0.001, now + i * 0.09 + 0.25);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now + i * 0.09);
+          osc.stop(now + i * 0.09 + 0.25);
+        });
+      },
+      playError() {
+        this.init();
+        if (!this.ctx) return;
+        const now = this.ctx.currentTime;
+        [320, 260].forEach((freq, i) => {
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(freq, now + i * 0.12);
+          gain.gain.setValueAtTime(0.1, now + i * 0.12);
+          gain.gain.linearRampToValueAtTime(0.001, now + i * 0.12 + 0.16);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start(now + i * 0.12);
+          osc.stop(now + i * 0.12 + 0.16);
+        });
+      }
+    };
+
+    function showToast(message, isError = false) {
+      const toast = document.getElementById('toastNotification');
+      const msg = document.getElementById('toastMessage');
+      const icon = document.getElementById('toastIcon');
+      msg.textContent = message;
+      if (isError) {
+        icon.className = 'fa-solid fa-triangle-exclamation text-amber-400 text-lg';
+      } else {
+        icon.className = 'fa-solid fa-circle-check text-emerald-400 text-lg';
+      }
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-24', 'opacity-0');
+      }, 3200);
+    }
+
+    // Normalization helper for syntax comparison
+    function normalizeSentence(str) {
+      return str
+        .toLowerCase()
+        .replace(/[,\.?!'’]/g, '')
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function updateProgressTracker() {
+      const container = document.getElementById('progressPillsGrid');
+      container.innerHTML = '';
+      const approvedCount = Object.keys(state.approvedQuestions).length;
+      document.getElementById('progressSummaryText').textContent = `(${approvedCount} of 10 Approved)`;
+
+      QUESTIONS_DATA.forEach((q, idx) => {
+        const isApproved = !!state.approvedQuestions[idx];
+        const isCurrent = idx === state.currentQuestionIndex && !isApproved;
+        const pill = document.createElement('div');
+        pill.className = `p-2 rounded-xl text-center text-xs font-bold transition flex flex-col items-center justify-center border ${
+          isApproved
+            ? 'bg-emerald-950/70 border-emerald-500/80 text-emerald-300'
+            : isCurrent
+            ? 'bg-amber-500/20 border-amber-400 text-amber-300 ring-2 ring-amber-400/40'
+            : 'bg-slate-800/60 border-slate-700/60 text-slate-500'
+        }`;
+        
+        let iconHtml = isApproved
+          ? '<i class="fa-solid fa-circle-check text-emerald-400 mb-0.5"></i>'
+          : isCurrent
+          ? '<i class="fa-solid fa-pencil text-amber-400 mb-0.5 animate-pulse"></i>'
+          : '<i class="fa-solid fa-lock text-slate-600 mb-0.5"></i>';
+
+        pill.innerHTML = `
+          ${iconHtml}
+          <span>Q${idx + 1}</span>
+        `;
+        container.appendChild(pill);
+      });
+    }
+
+    document.getElementById('teamSetupForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      state.team.leader = document.getElementById('studentLeader').value.trim();
+      state.team.writer = document.getElementById('studentWriter').value.trim();
+      state.team.checker = document.getElementById('studentChecker').value.trim();
+      state.team.timekeeper = document.getElementById('studentTimekeeper').value.trim();
+
+      document.getElementById('activeScribeName').textContent = state.team.writer || "Writer";
+      document.getElementById('activeGroupNameBadge').textContent = `Group 13: ${state.team.writer} (Scribe)`;
+
+      // Hide welcome, show workbench & tracker
+      document.getElementById('welcomeScreen').classList.add('hidden');
+      document.getElementById('progressTrackerContainer').classList.remove('hidden');
+      document.getElementById('workshopScreen').classList.remove('hidden');
+
+      loadQuestion(0);
+      showToast("Group 13 ready! Let's build Question 1.");
+    });
+
+    function loadQuestion(index) {
+      state.currentQuestionIndex = index;
+      const q = QUESTIONS_DATA[index];
+
+      // Update question header info
+      document.getElementById('questionBadgeNumber').textContent = `Question ${q.id} of 10`;
+      document.getElementById('questionSectionBadge').textContent = q.section;
+      document.getElementById('scenarioText').textContent = `"${q.scenario}"`;
+      document.getElementById('promptQ1').textContent = q.prompt1;
+      document.getElementById('promptQ2').textContent = q.prompt2;
+
+      // Phase 1 is visible, Phase 2 & 3 hidden
+      document.getElementById('phase1Container').classList.remove('hidden');
+      document.getElementById('phase2Container').classList.add('hidden');
+      document.getElementById('phase3ApprovedCard').classList.add('hidden');
+
+      // Prepare Scrambled Tiles (all valid tiles + impostors in random order)
+      const allTiles = [...q.tiles, ...q.impostors];
+      // Fisher-Yates Shuffle
+      for (let i = allTiles.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [allTiles[i], allTiles[j]] = [allTiles[j], allTiles[i]];
+      }
+
+      state.availableTiles = allTiles;
+      state.assembledTiles = [];
+
+      renderAssemblyArea();
+      renderTilesBank();
+      updateProgressTracker();
+    }
+
+    // Unlock Phase 2 button
+    document.getElementById('btnUnlockPhase2').addEventListener('click', function() {
+      AudioEngine.playPop();
+      document.getElementById('phase2Container').classList.remove('hidden');
+      this.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    function renderAssemblyArea() {
+      const area = document.getElementById('assemblyDropArea');
+
+      if (state.assembledTiles.length === 0) {
+        area.innerHTML = `
+          <div id="assemblyPlaceholder" class="text-slate-500 text-sm italic w-full text-center py-4">
+            Click tiles from your word bank below to build your group's question. More than one natural way is possible!
+          </div>
+        `;
+        return;
+      }
+
+      area.innerHTML = '';
+      state.assembledTiles.forEach((tileText, index) => {
+        const tile = document.createElement('button');
+        tile.type = 'button';
+        tile.className = 'word-tile px-3.5 py-2 bg-gradient-to-b from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 font-bold text-sm md:text-base rounded-xl border border-amber-300 shadow flex items-center gap-1.5';
+        tile.innerHTML = `<span>${tileText}</span> <i class="fa-solid fa-xmark text-xs opacity-60"></i>`;
+        
+        tile.addEventListener('click', () => {
+          AudioEngine.playPop();
+          // Remove from assembled and return to bank
+          state.assembledTiles.splice(index, 1);
+          state.availableTiles.push(tileText);
+          renderAssemblyArea();
+          renderTilesBank();
+        });
+
+        area.appendChild(tile);
+      });
+    }
+
+    function renderTilesBank() {
+      const bank = document.getElementById('tilesBankContainer');
+      bank.innerHTML = '';
+
+      state.availableTiles.forEach((tileText, index) => {
+        const tile = document.createElement('button');
+        tile.type = 'button';
+        tile.className = 'word-tile px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-100 font-semibold text-sm md:text-base rounded-xl border border-slate-600/80 shadow transition';
+        tile.textContent = tileText;
+
+        tile.addEventListener('click', () => {
+          AudioEngine.playPop();
+          // Move from bank to assembly
+          state.availableTiles.splice(index, 1);
+          state.assembledTiles.push(tileText);
+          renderAssemblyArea();
+          renderTilesBank();
+        });
+
+        bank.appendChild(tile);
+      });
+    }
+
+    // Reset Assembly Tray
+    document.getElementById('btnClearAssembly').addEventListener('click', () => {
+      AudioEngine.playPop();
+      state.availableTiles = [...state.availableTiles, ...state.assembledTiles];
+      state.assembledTiles = [];
+      renderAssemblyArea();
+      renderTilesBank();
+    });
+
+    document.getElementById('btnSubmitQuestion').addEventListener('click', function() {
+      const q = QUESTIONS_DATA[state.currentQuestionIndex];
+      const assembledSentence = state.assembledTiles.join(' ').trim();
+
+      if (state.assembledTiles.length === 0) {
+        showToast("Please assemble words into the construction tray first!", true);
+        AudioEngine.playError();
+        return;
+      }
+
+      // 1. Check if ANY impostor tile was used
+      const hasImpostor = state.assembledTiles.some(tile => q.impostors.includes(tile));
+
+      // 2. Normalize assembled sentence and test against all 3-4 valid variants
+      const normAssembled = normalizeSentence(assembledSentence);
+      const isMatchAnyValid = q.validWays.some(way => normalizeSentence(way) === normAssembled);
+
+      if (isMatchAnyValid && !hasImpostor) {
+        // SUCCESS: Big Green Approval
+        AudioEngine.playSuccess();
+        state.approvedQuestions[state.currentQuestionIndex] = assembledSentence;
+
+        // Hide phase 1 and 2, show Phase 3
+        document.getElementById('phase1Container').classList.add('hidden');
+        document.getElementById('phase2Container').classList.add('hidden');
+
+        const approvedCard = document.getElementById('phase3ApprovedCard');
+        document.getElementById('approvedQuestionDisplay').textContent = assembledSentence;
+        
+        // Show response format
+        let choicesHtml = `<strong>Type:</strong> ${q.responseType} <br/>`;
+        if (q.choices && q.choices.length > 0) {
+          choicesHtml += `<div class="mt-1 flex flex-wrap gap-2">` +
+            q.choices.map(c => `<span class="px-2.5 py-1 bg-slate-900 border border-amber-500/30 rounded-lg text-xs font-semibold text-amber-300">${c}</span>`).join('') +
+            `</div>`;
+        }
+        document.getElementById('approvedChoicesDisplay').innerHTML = choicesHtml;
+
+        approvedCard.classList.remove('hidden');
+        approvedCard.scrollIntoView({ behavior: 'smooth' });
+        updateProgressTracker();
+        showToast(`Approved! Question ${q.id} officially finalized.`);
+      } else {
+        // INCORRECT / IMPOSTOR USED -> Trigger 5-Sentence Consolidation Workshop
+        AudioEngine.playError();
+        openConsolidationModal(q);
+      }
+    });
+
+    function openConsolidationModal(q) {
+      const modal = document.getElementById('consolidationModal');
+      const drillsContainer = document.getElementById('consolidationDrillsList');
+      drillsContainer.innerHTML = '';
+      state.consolidationSelections = [null, null, null, null, null];
+      document.getElementById('drillFeedbackText').textContent = "Select the correct choice in all 5 sentences.";
+      document.getElementById('drillFeedbackText').className = "text-xs font-semibold text-slate-400";
+
+      q.drill.forEach((item, drillIdx) => {
+        const itemCard = document.createElement('div');
+        itemCard.className = 'bg-slate-800/80 p-3 rounded-xl border border-slate-700/80 text-xs md:text-sm';
+        
+        // Sentence prompt with bracket choices
+        const promptDiv = document.createElement('div');
+        promptDiv.className = 'text-slate-200 font-medium mb-2 leading-relaxed';
+        promptDiv.textContent = item.question;
+        itemCard.appendChild(promptDiv);
+
+        // Buttons for the two choices
+        const choicesDiv = document.createElement('div');
+        choicesDiv.className = 'flex gap-2';
+
+        item.choices.forEach(choiceText => {
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'px-3 py-1.5 bg-slate-900 hover:bg-slate-700 text-slate-200 border border-slate-600 rounded-lg font-bold transition text-xs drill-choice-btn';
+          btn.textContent = choiceText;
+
+          btn.addEventListener('click', () => {
+            AudioEngine.playPop();
+            state.consolidationSelections[drillIdx] = choiceText;
+            // Highlight selected button in this group
+            Array.from(choicesDiv.children).forEach(b => {
+              b.classList.remove('bg-amber-500', 'text-slate-950', 'border-amber-400');
+              b.classList.add('bg-slate-900', 'text-slate-200', 'border-slate-600');
+            });
+            btn.classList.remove('bg-slate-900', 'text-slate-200', 'border-slate-600');
+            btn.classList.add('bg-amber-500', 'text-slate-950', 'border-amber-400');
+          });
+
+          choicesDiv.appendChild(btn);
+        });
+
+        itemCard.appendChild(choicesDiv);
+        drillsContainer.appendChild(itemCard);
+      });
+
+      modal.classList.remove('hidden');
+    }
+
+    // Verify 5 Practice Sentences
+    document.getElementById('btnVerifyConsolidation').addEventListener('click', function() {
+      const q = QUESTIONS_DATA[state.currentQuestionIndex];
+      const feedback = document.getElementById('drillFeedbackText');
+
+      // Check if all answered
+      const allAnswered = state.consolidationSelections.every(val => val !== null);
+      if (!allAnswered) {
+        AudioEngine.playError();
+        feedback.textContent = "Please answer all 5 sentences before verifying!";
+        feedback.className = "text-xs font-bold text-amber-400";
+        return;
+      }
+
+      // Check correctness
+      let allCorrect = true;
+      state.consolidationSelections.forEach((val, i) => {
+        if (val !== q.drill[i].correct) {
+          allCorrect = false;
+        }
+      });
+
+      if (allCorrect) {
+        AudioEngine.playSuccess();
+        feedback.textContent = "✨ All 5 sentences correct! Pattern Mastered!";
+        feedback.className = "text-xs font-bold text-emerald-400";
+
+        setTimeout(() => {
+          document.getElementById('consolidationModal').classList.add('hidden');
+          showToast("Pattern Mastered! Now apply your learning back to your survey question.");
+          // Return to Phase 2 to fix tiles
+          document.getElementById('assemblyDropArea').scrollIntoView({ behavior: 'smooth' });
+        }, 1100);
+      } else {
+        AudioEngine.playError();
+        feedback.textContent = "Some choices are incorrect. Discuss with your group and try again!";
+        feedback.className = "text-xs font-bold text-rose-400";
+      }
+    });
+
+    document.getElementById('btnNextQuestion').addEventListener('click', function() {
+      AudioEngine.playPop();
+      const nextIndex = state.currentQuestionIndex + 1;
+
+      if (nextIndex < QUESTIONS_DATA.length) {
+        loadQuestion(nextIndex);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        // All 10 questions approved! Show Final Portfolio
+        showFinalExportScreen();
+      }
+    });
+
+    function showFinalExportScreen() {
+      AudioEngine.playSuccess();
+      document.getElementById('workshopScreen').classList.add('hidden');
+      document.getElementById('progressTrackerContainer').classList.add('hidden');
+      document.getElementById('finalExportScreen').classList.remove('hidden');
+
+      // Populate member names
+      document.getElementById('finalMemberLeader').textContent = state.team.leader || "Leader";
+      document.getElementById('finalMemberWriter').textContent = state.team.writer || "Writer";
+      document.getElementById('finalMemberChecker').textContent = state.team.checker || "Checker";
+      document.getElementById('finalMemberTimekeeper').textContent = state.team.timekeeper || "Timekeeper";
+
+      // Render 10 Approved Questions in Export Document
+      const container = document.getElementById('finalQuestionsListContainer');
+      container.innerHTML = '';
+
+      QUESTIONS_DATA.forEach((q, idx) => {
+        const approvedText = state.approvedQuestions[idx] || q.validWays[0];
+        const card = document.createElement('div');
+        card.className = 'bg-slate-800/80 p-4 rounded-xl border border-slate-700/90 text-sm';
+
+        let choicesMarkup = '';
+        if (q.choices && q.choices.length > 0) {
+          choicesMarkup = `<div class="mt-2.5 grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-slate-300">` +
+            q.choices.map(c => `<div class="bg-slate-900/80 px-3 py-1.5 rounded-lg border border-slate-700 flex items-center gap-2"><span>[ ]</span> <span>${c}</span></div>`).join('') +
+            `</div>`;
+        }
+
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-2 mb-1">
+            <span class="text-xs font-bold text-amber-400 uppercase tracking-wide">Question ${idx + 1} (${q.section.replace('Section ', '')})</span>
+            <span class="text-[10px] text-emerald-400 font-semibold flex items-center gap-1"><i class="fa-solid fa-check"></i> Approved</span>
+          </div>
+          <div class="text-base font-bold text-white leading-snug">
+            ${approvedText}
+          </div>
+          ${choicesMarkup}
+        `;
+        container.appendChild(card);
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Copy Full Survey to Clipboard
+    document.getElementById('btnCopySurvey').addEventListener('click', function() {
+      let fullText = `========================================================\n`;
+      fullText += `UNIVERSITY OF TECHNOLOGY AND APPLIED SCIENCES (UTAS) - IBRA\n`;
+      fullText += `GENERAL FOUNDATION PROGRAMME • PSC (GE-3 GROUP 13)\n`;
+      fullText += `COURSE: PROJECT AND PRESENTATION (P&P)\n`;
+      fullText += `SURVEY TOPIC: Tools Students Use to Plan Their Study and Daily Tasks\n`;
+      fullText += `========================================================\n\n`;
+      fullText += `DEAR RESPONDENT:\n`;
+      fullText += `My name is [Student Name], and I am a Level 4 student in the General Foundation Programme (Group 13). As part of our Project and Presentation course, my team and I are conducting a research study on Tools Students Use to Plan Their Study and Daily Tasks among college students. We appreciate you taking 2–3 minutes to answer the following questions. Responses remain anonymous and will be used solely for academic research purposes. Thank you for your support and cooperation!\n\n`;
+      fullText += `STUDENT RESEARCH GROUP:\n`;
+      fullText += `• Discussion Leader: ${state.team.leader}\n`;
+      fullText += `• Writer (Scribe):   ${state.team.writer}\n`;
+      fullText += `• Syntax Checker:    ${state.team.checker}\n`;
+      fullText += `• Timekeeper:        ${state.team.timekeeper}\n\n`;
+      fullText += `DEMOGRAPHIC INFORMATION:\n`;
+      fullText += `Gender: [ ] Male   [ ] Female\n`;
+      fullText += `Status: [ ] Foundation Student   [ ] Post-Foundation Student   [ ] Other\n\n`;
+      fullText += `SURVEY QUESTIONS:\n`;
+
+      QUESTIONS_DATA.forEach((q, idx) => {
+        const text = state.approvedQuestions[idx] || q.validWays[0];
+        fullText += `\nQ${idx + 1}. ${text}\n`;
+        if (q.choices && q.choices.length > 0) {
+          q.choices.forEach(c => {
+            fullText += `   [ ] ${c}\n`;
+          });
+        }
+      });
+
+      fullText += `\n========================================================\n`;
+      fullText += `Class: GE-3 Group 13 | Course: Project and Presentation (P&P)\n`;
+      fullText += `Survey Framework & Studio: Designed by Muhammad Shahzad, UTAS Ibra (2026-2027)\n`;
+      fullText += `========================================================\n`;
+
+      // Fallback copy execCommand for iframe compatibility
+      const tempArea = document.createElement('textarea');
+      tempArea.value = fullText;
+      document.body.appendChild(tempArea);
+      tempArea.select();
+      try {
+        document.execCommand('copy');
+        showToast("Survey portfolio copied to clipboard successfully!");
+      } catch (err) {
+        showToast("Unable to copy automatically. Please select text manually.", true);
+      }
+      document.body.removeChild(tempArea);
+    });
+
+    // Print / PDF Handler
+    document.getElementById('btnPrintSurvey').addEventListener('click', function() {
+      window.print();
+    });
+
+    // Restart Studio Handler
+    document.getElementById('btnRestartStudio').addEventListener('click', function() {
+      if (window.confirm ? confirm("Restart the Studio and build a new questionnaire?") : true) {
+        state.currentQuestionIndex = 0;
+        state.approvedQuestions = {};
+        document.getElementById('finalExportScreen').classList.add('hidden');
+        document.getElementById('welcomeScreen').classList.remove('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+  </script>
+</body>
+</html>
